@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary"
 import technicianModel from "../models/technicianModel.js"
 import fs from "fs"  // to remove local file after upload
 import jwt from 'jsonwebtoken'
+import { error } from "console"
 
 
 
@@ -92,5 +93,18 @@ const loginAdmin = async (req,res) => {
     }
 }
 
+// API to get all Technician list for admin panel
+const allTechnicians = async (req,res) => {
+    try {
+        
+        const technicians = await technicianModel.find({}).select('-password')
+        res.json({success:true,technicians})
 
-export {addTechnician,loginAdmin}
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+}
+
+
+export {addTechnician,loginAdmin,allTechnicians}
