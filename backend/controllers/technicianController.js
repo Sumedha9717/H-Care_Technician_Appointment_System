@@ -18,4 +18,19 @@ const changeAvailability = async (req,res) => {
 
 }
 
-export {changeAvailability}
+// TechnicianList api
+const technicianList = async (req,res) => {
+
+    try {
+
+        const technicians = await technicianModel.find({}).select(['-password','-email'])
+
+        res.json({success:true,technicians})
+        
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+}
+
+export {changeAvailability,technicianList}

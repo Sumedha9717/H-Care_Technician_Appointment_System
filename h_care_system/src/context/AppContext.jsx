@@ -1,16 +1,45 @@
-import { createContext } from "react";
-import { technicians } from '../assets/assets_frontend/assets';
+import { createContext, useEffect, useState } from "react";
+import axios from 'axios'
+import {toast} from 'react-toastify'
+
 
 export const AppContext = createContext()
 
 const AppContextProvider = (props) => {
 
     const currencySymbol = 'Rs'
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const [technicians,setTechnicians] = useState([])
 
     const value = {
         technicians,
         currencySymbol
     }
+
+    // call the technician api
+    const getTechniciansData = async () => {
+
+        try {
+
+            const {data} = await axios.get(backendUrl + '/api/technician/list')
+            if (data.success) {
+                setTechnicians(data.technicians)
+            } else {
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+    }
+
+   
+    useEffect(()=>{
+
+        getTechniciansData()
+    },[])
+
 
     return (
         <AppContext.Provider value={value}>

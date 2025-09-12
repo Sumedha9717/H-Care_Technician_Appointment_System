@@ -4,6 +4,8 @@ import 'dotenv/config'
 import connectDB from './config/mongodb.js'
 import connectCloudinary from './config/cloudinary.js'
 import adminRouter from './routes/adminRoute.js'
+import technicianRouter from './routes/technicinRoute.js'
+import userRouter from './routes/userRoute.js'
 
 
 // app config
@@ -21,7 +23,12 @@ app.use(cors())
 
 // initialize api endpoints
 app.use('/api/admin',adminRouter)
-// localhost:4000/api/admin/add-technician
+
+// 
+app.use('/api/technician',technicianRouter)
+
+// 
+app.use('/api/user',userRouter)
 
 app.get('/',(req,res)=>{
     res.send('API WORKING')
