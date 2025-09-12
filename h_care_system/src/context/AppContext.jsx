@@ -9,12 +9,11 @@ const AppContextProvider = (props) => {
 
     const currencySymbol = 'Rs'
     const backendUrl = import.meta.env.VITE_BACKEND_URL
-    const [technicians,setTechnicians] = useState([])
 
-    const value = {
-        technicians,
-        currencySymbol
-    }
+    const [technicians,setTechnicians] = useState([])
+    const [token,setToken] = useState('')
+
+   
 
     // call the technician api
     const getTechniciansData = async () => {
@@ -32,6 +31,13 @@ const AppContextProvider = (props) => {
             console.log(error)
             toast.error(error.message)
         }
+    }
+
+     const value = {
+        technicians,
+        currencySymbol,
+        token,setToken,
+        backendUrl
     }
 
    

@@ -61,7 +61,7 @@ const loginUser = async (req,res) => {
 
         // check the user exist
         if (!user) {
-           res.json({success:false,message:'User does not exist'}) 
+           return res.json({success:false,message:'User does not exist'}) 
         }
         
         // 
