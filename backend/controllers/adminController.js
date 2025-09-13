@@ -5,6 +5,7 @@ import technicianModel from "../models/technicianModel.js"
 import fs from "fs"  // to remove local file after upload
 import jwt from 'jsonwebtoken'
 import { error } from "console"
+import appointmentModel from "../models/appointmentModel.js"
 
 
 
@@ -106,5 +107,47 @@ const allTechnicians = async (req,res) => {
     }
 }
 
+// API to get all appointments list
+const appointmentsAdmin = async (req,res) => {
+    try {
 
-export {addTechnician,loginAdmin,allTechnicians}
+        const appointments = await appointmentModel.find({})
+        res.json({success:true,appointments})
+        
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+}
+
+// API for appointment cancellation
+const appointmentCancel = async (req,res) => {
+    try {
+
+         const {appointmentId} = req.body
+
+         const appointmentData = await appointmentModel.findById(appointmentId)
+
+        await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled:true})
+
+        // releasing technician slot
+        const {tecId, slotDate, slotTime} = appointmentData
+
+        const technicianData = await technicianModel.findById(tecId)
+
+        let slots_booked = technicianData.slots_booked
+
+        slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime)
+
+        await technicianModel.findByIdAndUpdate(tecId, {slots_booked})
+
+        res.json({success:true,message:'Appointment Cancelled'})
+        
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+}
+
+
+export {addTechnician,loginAdmin,allTechnicians,appointmentsAdmin,appointmentCancel}

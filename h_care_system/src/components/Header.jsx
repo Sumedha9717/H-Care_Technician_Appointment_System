@@ -25,8 +25,8 @@ const Header = () => {
           <div className="flex flex-col md:flex-row items-center gap-3 text-indigo-800 text-sm font-light mb-4">
             <img className="w-28" src={assets.group_profiles} alt="Trusted Professionals" />
             <p className="mb-4 md:mb-0 font-semibold">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum veritatis ipsum quia voluptatibus recusandae,
-              <br className="hidden sm:block" /> soluta explicabo ipsam molestias saepe tempore nam blanditiis laborum iste eos ullam possimus dignissimos neque quas?
+              Get it fixed, and get on with your day. We make it simple to schedule service with highly-rated,
+              <br className="hidden sm:block" /> background-checked technicians. Expert help is just a few clicks away.
             </p>
           </div>
           
